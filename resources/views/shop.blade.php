@@ -1,0 +1,126 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="max-w-4xl mx-auto my-10 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+        <button onclick="toggleLoanList()"
+            class="w-full flex justify-between items-center py-4 px-6 bg-green-50 hover:bg-green-100 rounded-lg transition-all border border-green-200 group">
+            <span class="text-xl font-bold text-green-800">ချေးငွေအမျိုးအစားများ</span>
+            <i id="loan-arrow"
+                class="fas fa-chevron-down text-green-600 group-hover:text-green-800 transition-transform duration-300"></i>
+        </button>
+
+        <div id="loan-list" class="hidden mt-4 space-y-2">
+            @php
+                $loans = [
+                    [
+                        'id' => 1,
+                        'title' => 'စိုက်ပျိုးစရိတ်ချေးငွေ (Seasonal Loan)',
+                        'image' => asset('assets/img/Lal.png'),
+                        'desc' => 'မိုးစပါး၊ ဆောင်းသီးနှံနှင့် အခြားသီးနှံများအတွက် စိုက်ပျိုးစရိတ်များကို ရာသီအလိုက် အတိုးနှုန်းသက်သာစွာဖြင့် ထုတ်ချေးပေးခြင်း ဖြစ်ပါသည်။ တောင်သူတစ်ဦးချင်းစီ၏ စိုက်ပျိုးဧကအပေါ် မူတည်၍ သတ်မှတ်ထားသော နှုန်းထားများအတိုင်း ထုတ်ချေးပေးပါသည်။'
+                    ],
+                    [
+                        'id' => 2,
+                        'title' => 'ဖွံ့ဖြိုးရေးချေးငွေ (Development Loan/Term Loan)',
+                        'image' => asset('assets/img/Lal.png'),
+                        'desc' => 'လယ်ယာသုံးစက်ကိရိယာများ (ဥပမာ - ထွန်စက်၊ ရိတ်သိမ်းခြွေလှေ့စက်) ဝယ်ယူရန်နှင့် လယ်ယာကဏ္ဍ အခြေခံအဆောက်အအုံများ ဖွံ့ဖြိုးတိုးတက်စေရန် ရည်ရွယ်၍ ကာလလတ်/ကာလရှည် ထုတ်ချေးပေးသော ချေးငွေဖြစ်ပါသည်။'
+                    ],
+                    [
+                        'id' => 3,
+                        'title' => 'JICA Two-Step Loan',
+                        'image' => asset('assets/img/Lal.png'),
+                        'desc' => 'ဂျပန်နိုင်ငံ အပြည်ပြည်ဆိုင်ရာ ပူးပေါင်းဆောင်ရွက်ရေးအေဂျင်စီ (JICA) နှင့် ပူးပေါင်း၍ လယ်ယာကဏ္ဍ ခေတ်မီစေရန်နှင့် တောင်သူများ၏ လူမှုစီးပွားဘဝ မြင့်မားလာစေရန် အတိုးနှုန်း အလွန်သက်သာစွာဖြင့် ထုတ်ချေးပေးသော အထူးချေးငွေဖြစ်ပါသည်။'
+                    ],
+                    [
+                        'id' => 4,
+                        'title' => 'ကိုရီးယား (KEXIM Bank) ချေးငွေ',
+                        'image' => asset('assets/img/Lal.png'),
+                        'desc' => 'ကိုရီးယားနိုင်ငံမှ နည်းပညာနှင့် စက်ကိရိယာများ ဝယ်ယူအသုံးပြုနိုင်ရန်နှင့် လယ်ယာကုန်ထုတ်လုပ်မှု စွမ်းအားမြှင့်တင်ရန်အတွက် ထုတ်ချေးပေးသော အစီအစဉ်ဖြစ်ပါသည်။'
+                    ],
+                    [
+                        'id' => 5,
+                        'title' => 'အထူးစီမံကိန်းချေးငွေများ',
+                        'image' => asset('assets/img/Lal.png'),
+                        'desc' => 'နိုင်ငံတော်၏ အထူးအစီအစဉ်များအရ ကော်ဖီ၊ လက်ဖက်နှင့် အခြားနှစ်ရှည်သီးနှံများ စိုက်ပျိုးထုတ်လုပ်မှု တိုးတက်စေရန် သီးခြားသတ်မှတ်ချက်များဖြင့် ထုတ်ချေးပေးသော ချေးငွေများဖြစ်ပါသည်။'
+                    ]
+                ];
+            @endphp
+
+            @foreach($loans as $loan)
+                <div onclick="openLoanModal('{{ $loan['title'] }}', '{{ $loan['desc'] }}', '{{ $loan['image'] }}')"
+                    class="p-4 bg-white border border-gray-100 rounded-md hover:bg-green-50 hover:border-green-200 cursor-pointer flex items-center gap-3 transition-all">
+                    <div
+                        class="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center font-bold text-sm">
+                        {{ $loan['id'] }}
+                    </div>
+                    <span class="text-gray-700 font-medium">{{ $loan['title'] }}</span>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div id="loan-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div onclick="closeLoanModal()" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+        <div class="relative bg-white w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden transform transition-all">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 h-64 md:h-auto bg-gray-200">
+                    <img id="modal-loan-img" src="" alt="Loan Image" class="w-full h-full object-cover">
+                </div>
+
+                <div class="md:w-1/2 p-8">
+                    <h3 id="modal-loan-title" class="text-2xl font-bold text-green-800 mb-4 border-b border-green-100 pb-2">
+                    </h3>
+                    <p id="modal-loan-desc" class="text-gray-600 leading-relaxed text-sm"></p>
+
+                    <button onclick="closeLoanModal()"
+                        class="mt-8 w-full py-3 bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl transition-colors">
+                        ပိတ်မည်
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Accordion List
+        function toggleLoanList() {
+            const list = document.getElementById('loan-list');
+            const arrow = document.getElementById('loan-arrow');
+
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                list.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Open Modal with dynamic content including image
+        function openLoanModal(title, desc, imgSrc) {
+            document.getElementById('modal-loan-title').innerText = title;
+            document.getElementById('modal-loan-desc').innerText = desc;
+
+            const modalImg = document.getElementById('modal-loan-img');
+            modalImg.src = imgSrc;
+
+            const modal = document.getElementById('loan-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        // Close Modal
+        function closeLoanModal() {
+            const modal = document.getElementById('loan-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrolling & Font */
+        body {
+            font-family: 'Pyidaungsu', sans-serif;
+        }
+    </style>
+@endsection
