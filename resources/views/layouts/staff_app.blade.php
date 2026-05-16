@@ -17,6 +17,12 @@
     <!-- DataTables CDN (For Advanced Reporting) -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap');
@@ -127,9 +133,9 @@
                     တောင်သူလယ်သမားများ
                 </a> --}}
 
-                <a href="#"
+                <a href="{{ route('borrowers.list') }}"
                     class="flex items-center p-3.5 text-slate-600 hover:bg-slate-50 rounded-2xl font-semibold transition-all">
-                    <i class="fas fa-hand-holding-dollar me-3 w-5 text-lg text-emerald-600"></i> စရိတ်ချေးငွေစာရင်း
+                    <i class="fas fa-hand-holding-dollar me-3 w-5 text-lg text-emerald-600"></i> ငွေစုစာရင်းအကောင့်များ
                 </a>
 
                 <a href="#"
