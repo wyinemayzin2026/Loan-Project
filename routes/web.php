@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Staff\AuthController;
 use App\Http\Controllers\BorrowerController;
 use App\Http\Controllers\BorrowerLoginController;
+use App\Http\Controllers\BorrowerLoanController;
 
 Route::get('/', function () {
     return view('welcome'); // or 'index' depending on your filename
@@ -43,4 +44,10 @@ Route::delete('/savings-accounts/{id}', [BorrowerController::class, 'destroy'])-
 
 Route::get('/borrower/login', [BorrowerLoginController::class, 'showLoginForm'])->name('borrower.login');
 Route::post('/borrower/login', [BorrowerLoginController::class, 'loginSubmit'])->name('borrower.login.submit');
-Route::post('/borrower/logout', [App\Http\Controllers\BorrowerLoginController::class, 'logout'])->name('borrower.logout');
+Route::post('/borrower/logout', [BorrowerLoginController::class, 'logout'])->name('borrower.logout');
+
+Route::get('/borrower/loan', [BorrowerLoanController::class, 'create'])->name('borrower.loan');
+
+// လျှောက်လွှာ Data များကို Store လုပ်ရန် Route
+Route::post('/borrower/loan/store', [BorrowerLoanController::class, 'store'])->name('borrower.loan.store');
+Route::get('/borrower/loan/history', [BorrowerLoanController::class, 'history'])->name('borrower.loan.history');

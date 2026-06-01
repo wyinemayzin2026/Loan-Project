@@ -39,6 +39,12 @@
                     <a href="{{ url('/contact') }}"
                         class="hover:text-green-700 transition border-b-2 border-transparent hover:border-green-700 pb-1">
                         ဆက်သွယ်ရန်</a>
+                    @if(Auth::guard('borrower')->check())
+                        <a href="{{ route('borrower.loan.history') }}"
+                            class="inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow transition text-sm">
+                            📜 မိမိ၏ လျှောက်လွှာရာဇဝင်ကို ကြည့်မည်
+                        </a>
+                    @endif
                 </div>
 
                 <div class="flex items-center gap-4">

@@ -14,7 +14,7 @@ class BorrowerLoginController extends Controller
         if (Auth::guard('borrower')->check()) {
             return redirect()->route('home');
         }
-        return view('home');
+        return view('borrower.login');
     }
 
     // Login ဒေတာများကို လက်ခံစစ်ဆေးရန်
